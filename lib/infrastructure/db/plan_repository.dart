@@ -66,6 +66,19 @@ class PlanRepository {
     });
   }
 
+  Future<void> addPerson(String planId, Person person) async {
+    await _db.insert('person', {
+      'id': person.id,
+      'plan_id': planId,
+      'name': person.name,
+      'color_index': person.colorIndex,
+    });
+  }
+
+  Future<void> removePerson(String personId) async {
+    await _db.delete('person', where: 'id = ?', whereArgs: [personId]);
+  }
+
   Future<List<Plan>> getPlans() async {
     final rows = await _db.query('plan', orderBy: 'created_at DESC');
     final plans = <Plan>[];

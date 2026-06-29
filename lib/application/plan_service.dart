@@ -35,6 +35,14 @@ class PlanService {
     return plan;
   }
 
+  Future<void> addPerson(String planId, String name) async {
+    await _repo.addPerson(planId, Person(id: _newId(), name: name));
+  }
+
+  Future<void> removePerson(String personId) async {
+    await _repo.removePerson(personId);
+  }
+
   /// Computes each person's share from the [strategy] and saves the expense.
   Future<void> addExpense(
     String planId, {

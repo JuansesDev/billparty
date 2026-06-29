@@ -34,4 +34,16 @@ void main() {
       expect(sum, 0); // ← the deep invariant: the system is always balanced
     });
   });
+
+  group('isSettled', () {
+    test('true when everyone is at zero', () {
+      expect(isSettled({'a': 0, 'b': 0}), true);
+    });
+    test('true for an empty plan (no debts)', () {
+      expect(isSettled({}), true);
+    });
+    test('false when someone still owes', () {
+      expect(isSettled({'a': 60, 'b': -60}), false);
+    });
+  });
 }

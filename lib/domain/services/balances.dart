@@ -19,3 +19,7 @@ Map<String, int> computeBalances(List<Expense> expenses, List<Payment> payments)
     }
     return net;
 }
+
+bool isSettled(Map<String, int> balances){
+  return balances.values.every((net) => net == 0);
+}

@@ -24,7 +24,7 @@ Map<String, int> splitExact(int amount, Map<String, int> exactAmounts) {
 
 Map<String, int> splitByShares(int amount, Map<String, int> shareWeights) {
   final totalShares = shareWeights.values.fold(0, (sum, v) => sum + v);
-  if (totalShares <= 0 ) {
+  if (totalShares <= 0) {
     throw ArgumentError('Total shares must be greater than zero');
   }
   final result = <String, int>{};
@@ -40,10 +40,9 @@ Map<String, int> splitByShares(int amount, Map<String, int> shareWeights) {
 
   final leftover = amount - allocated;
   final ranked = shareWeights.keys.toList()
-  ..sort((a, b) => remainders[b]!.compareTo(remainders[a]!));
+    ..sort((a, b) => remainders[b]!.compareTo(remainders[a]!));
   for (var i = 0; i < leftover; i++) {
     result[ranked[i]] = result[ranked[i]]! + 1;
   }
   return result;
-
 }

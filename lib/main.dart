@@ -31,12 +31,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BillParty'),
-      ),
-      body: const Center(
-        child: Text('Blank screen — ready to build.'),
-      ),
+      appBar: AppBar(title: const Text('BillParty')),
+      body: const Center(child: Text('Blank screen — ready to build.')),
     );
   }
 }

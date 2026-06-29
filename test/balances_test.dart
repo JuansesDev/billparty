@@ -7,7 +7,11 @@ void main() {
   group('computeBalances', () {
     test('one expense split equally', () {
       final expenses = [
-        Expense(amount: 90, payerId: 'ana', shares: {'ana': 30, 'beto': 30, 'caro': 30}),
+        Expense(
+          amount: 90,
+          payerId: 'ana',
+          shares: {'ana': 30, 'beto': 30, 'caro': 30},
+        ),
       ];
       final net = computeBalances(expenses, []);
       // Ana: +90 paid − 30 her share = +60 ; Beto −30 ; Caro −30
@@ -16,7 +20,11 @@ void main() {
 
     test('a registered payment reduces the debt', () {
       final expenses = [
-        Expense(amount: 90, payerId: 'ana', shares: {'ana': 30, 'beto': 30, 'caro': 30}),
+        Expense(
+          amount: 90,
+          payerId: 'ana',
+          shares: {'ana': 30, 'beto': 30, 'caro': 30},
+        ),
       ];
       final payments = [
         Payment(fromId: 'beto', toId: 'ana', amount: 30), // Beto pays Ana back

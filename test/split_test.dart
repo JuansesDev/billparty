@@ -5,11 +5,11 @@ void main() {
   group('splitEqually', () {
     test('divides evenly when it can', () {
       final shares = splitEqually(300, ['a', 'b', 'c']);
-      expect(shares, {'a':100, 'b':100, 'c':100});
+      expect(shares, {'a': 100, 'b': 100, 'c': 100});
     });
     test('hands the remainder to the first participants', () {
       final shares = splitEqually(100, ['a', 'b', 'c']);
-      expect(shares, {'a':34, 'b':33, 'c':33});
+      expect(shares, {'a': 34, 'b': 33, 'c': 33});
     });
     test('shares always sum back to the amount (the invariant)', () {
       final shares = splitEqually(100, ['a', 'b', 'c']);

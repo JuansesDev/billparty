@@ -37,4 +37,31 @@ void main() {
       expect(total, 100); // 34 + 33 + 33
     });
   });
+
+  group('split (strategy dispatcher)', () {
+    test('dispatches to the equal split', () {
+      expect(split(100, const EqualSplit(['a', 'b', 'c'])), {
+        'a': 34,
+        'b': 33,
+        'c': 33,
+      });
+    });
+    test('dispatches to the exact split', () {
+      expect(split(100, const ExactSplit({'a': 70, 'b': 30})), {
+        'a': 70,
+        'b': 30,
+      });
+    });
+    test('dispatches to the shares split', () {
+      expect(split(90, const SharesSplit({'a': 2, 'b': 1})), {
+        'a': 60,
+        'b': 30,
+      });
+    });
+    test('type label reflects the strategy', () {
+      expect(const EqualSplit([]).type, 'equal');
+      expect(const ExactSplit({}).type, 'exact');
+      expect(const SharesSplit({}).type, 'shares');
+    });
+  });
 }

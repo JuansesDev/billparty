@@ -46,3 +46,40 @@ Map<String, int> splitByShares(int amount, Map<String, int> shareWeights) {
   }
   return result;
 }
+
+/// How an expense should be divided. One case per split mode.
+sealed class SplitStrategy {
+  const SplitStrategy();
+
+  /// A stable label stored alongside the expense (so it can be re-edited later).
+  String get type => switch (this) {
+    EqualSplit() => 'equal',
+    ExactSplit() => 'exact',
+    SharesSplit() => 'shares',
+  };
+}
+
+class EqualSplit extends SplitStrategy {
+  final List<String> participantIds;
+  const EqualSplit(this.participantIds);
+}
+
+class ExactSplit extends SplitStrategy {
+  final Map<String, int> amounts;
+  const ExactSplit(this.amounts);
+}
+
+class SharesSplit extends SplitStrategy {
+  final Map<String, int> weights;
+  const SharesSplit(this.weights);
+}
+
+/// Single entry point: turns a [SplitStrategy] into each person's share.
+/// Adding a new mode = one more case here + its class — nothing else changes.
+Map<String, int> split(int amount, SplitStrategy strategy) {
+  return switch (strategy) {
+    EqualSplit(:final participantIds) => splitEqually(amount, participantIds),
+    ExactSplit(:final amounts) => splitExact(amount, amounts),
+    SharesSplit(:final weights) => splitByShares(amount, weights),
+  };
+}

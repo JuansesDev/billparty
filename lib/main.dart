@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // Entry point of every Dart program.
 void main() {
-  runApp(const BillPartyApp());
+  // ProviderScope stores the state of every Riverpod provider for the whole app.
+  runApp(const ProviderScope(child: BillPartyApp()));
 }
 
 // Root widget of the application. It never changes by itself, so it is

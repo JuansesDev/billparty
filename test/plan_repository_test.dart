@@ -5,6 +5,9 @@ import 'package:billparty/infrastructure/db/app_database.dart';
 import 'package:billparty/infrastructure/db/plan_repository.dart';
 import 'package:billparty/domain/models/plan.dart';
 import 'package:billparty/domain/models/person.dart';
+import 'package:billparty/domain/models/expense.dart';
+import 'package:billparty/domain/models/payment.dart';
+import 'package:billparty/domain/services/balances.dart';
 
 void main() {
   // Run SQLite on the host (no emulator) via FFI.
@@ -74,6 +77,93 @@ void main() {
 
       expect(await repo.getPlan('p1'), isNull);
       expect(await db.query('person'), isEmpty); // cascade worked
+    });
+  });
+
+  group('PlanRepository expenses & payments', () {
+    // A plan with two people, reused by the tests below.
+    Future<void> seedPlan() => repo.createPlan(
+      Plan(
+        id: 'p1',
+        name: 'Dinner',
+        createdAt: 1,
+        people: const [
+          Person(id: 'a', name: 'Ana'),
+          Person(id: 'b', name: 'Beto'),
+        ],
+      ),
+    );
+
+    test('stores an expense with its shares and loads it back', () async {
+      await seedPlan();
+      await repo.addExpense(
+        'p1',
+        const Expense(
+          id: 'e1',
+          description: 'Pizza',
+          amount: 100,
+          payerId: 'a',
+          shares: {'a': 50, 'b': 50},
+          createdAt: 10,
+        ),
+      );
+
+      final plan = await repo.getPlan('p1');
+      expect(plan!.expenses.length, 1);
+      expect(plan.expenses.first.description, 'Pizza');
+      expect(plan.expenses.first.payerId, 'a');
+      expect(plan.expenses.first.shares, {'a': 50, 'b': 50});
+    });
+
+    test('stores a payment and loads it back', () async {
+      await seedPlan();
+      await repo.addPayment(
+        'p1',
+        const Payment(
+          id: 'pay1',
+          fromId: 'b',
+          toId: 'a',
+          amount: 50,
+          createdAt: 20,
+        ),
+      );
+
+      final plan = await repo.getPlan('p1');
+      expect(plan!.payments.length, 1);
+      expect(plan.payments.first.fromId, 'b');
+      expect(plan.payments.first.amount, 50);
+    });
+
+    test('balances computed from a reloaded plan match the math', () async {
+      await seedPlan();
+      await repo.addExpense(
+        'p1',
+        const Expense(
+          id: 'e1',
+          description: 'Pizza',
+          amount: 100,
+          payerId: 'a',
+          shares: {'a': 50, 'b': 50},
+          createdAt: 10,
+        ),
+      );
+      await repo.addPayment(
+        'p1',
+        const Payment(
+          id: 'pay1',
+          fromId: 'b',
+          toId: 'a',
+          amount: 20,
+          createdAt: 20,
+        ),
+      );
+
+      final plan = await repo.getPlan('p1');
+      final net = computeBalances(plan!.expenses, plan.payments);
+
+      // Ana paid 100, owes 50 → +50; minus 20 Beto already paid back → +30.
+      // Beto owes 50, paid 20 back → -30.
+      expect(net, {'a': 30, 'b': -30});
     });
   });
 }

@@ -1,0 +1,48 @@
+# Draft F-Droid build metadata for BillParty.
+#
+# This file is a REFERENCE. It belongs in the fdroiddata repo at:
+#   metadata/io.github.juansesdev.billparty.yml
+# It does NOT affect how this app is built locally — it's the recipe F-Droid's
+# build server uses to compile and publish BillParty from source.
+#
+# F-Droid signs the result with ITS OWN key. Our android/app/build.gradle.kts
+# falls back to debug signing when key.properties is absent (which it is on the
+# build server), and F-Droid replaces that signature — so no keystore is needed
+# here.
+#
+# See fdroid/README.md for how to submit. The Builds: block is the part most
+# likely to need small tweaks during review — cross-check it against a recent
+# Flutter app already in fdroiddata.
+
+Categories:
+  - Money
+License: MIT
+AuthorName: JuansesDev
+SourceCode: https://github.com/JuansesDev/billparty
+IssueTracker: https://github.com/JuansesDev/billparty/issues
+Changelog: https://github.com/JuansesDev/billparty/releases
+
+AutoName: BillParty
+
+RepoType: git
+Repo: https://github.com/JuansesDev/billparty
+
+Builds:
+  - versionName: 1.0.0
+    versionCode: 1
+    commit: v1.0.0
+    srclibs:
+      - flutter@3.44.2
+    output: build/app/outputs/flutter-apk/app-release.apk
+    prebuild:
+      - export PATH="$$flutter$$/bin:$PATH"
+      - flutter config --no-analytics --no-cli-animations
+      - flutter pub get
+    build:
+      - export PATH="$$flutter$$/bin:$PATH"
+      - flutter build apk --release
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: 1.0.0
+CurrentVersionCode: 1

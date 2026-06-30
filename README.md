@@ -25,7 +25,7 @@ This isn't an accidental limitation — it's the whole point. Keeping the state 
 - **Flexible splitting** — split an expense *equally*, by *exact amounts*, or by *shares* (e.g. "the couple counts double").
 - **Balances** — see at a glance who is owed and who owes.
 - **Settle up** — the app computes the *minimum* set of payments to make everyone even.
-- **Share a snapshot** — export the summary as text or a QR code. No live sync, no servers.
+- **Share a snapshot** — export an itemized text summary (expenses, balances, who pays whom). No live sync, no servers.
 - **Exact money** — amounts are stored as integers, so balances are always exact (no floating-point drift).
 
 ## Privacy by design
@@ -49,7 +49,7 @@ The domain knows nothing about Flutter or SQLite. The rules that must always hol
 lib/
 ├─ domain/          ← pure business logic (models, splitting, balances, settle-up)
 ├─ application/     ← use cases that orchestrate the domain
-├─ infrastructure/  ← SQLite repositories, share/QR generation
+├─ infrastructure/  ← SQLite repositories
 └─ ui/              ← screens and widgets
 ```
 
@@ -64,11 +64,11 @@ Requires the [Flutter SDK](https://docs.flutter.dev/get-started/install).
 
 ## Roadmap
 
-- [ ] MVP: plans, people, expenses, the three split modes, balances and settle-up.
-- [ ] Share summary as text.
-- [ ] Share as image / read-only QR.
+- [x] MVP: plans, people, expenses, the three split modes, balances and settle-up.
+- [x] Edit / delete expenses, partial payments.
+- [x] Share an itemized text summary.
 - [ ] Distribution via F-Droid (and optionally Google Play).
-- [ ] Extra split modes (percentage, per-item), multi-currency, JSON backup.
+- [ ] Multi-currency, JSON backup/restore.
 
 ## Contributing
 

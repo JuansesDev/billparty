@@ -68,14 +68,49 @@ class PlansNotifier extends AsyncNotifier<List<Plan>> {
     await _reload();
   }
 
+  Future<void> deleteExpense(String planId, String expenseId) async {
+    final repo = await ref.read(planRepositoryProvider.future);
+    await repo.deleteExpense(expenseId);
+    await _reload();
+  }
+
+  /// Editing = drop the old expense and add the new one (its id changes).
+  Future<void> updateExpense(
+    String planId,
+    String oldExpenseId, {
+    required String description,
+    required int amount,
+    required String payerId,
+    required SplitStrategy strategy,
+  }) async {
+    final repo = await ref.read(planRepositoryProvider.future);
+    final service = await ref.read(planServiceProvider.future);
+    await repo.deleteExpense(oldExpenseId);
+    await service.addExpense(
+      planId,
+      description: description,
+      amount: amount,
+      payerId: payerId,
+      strategy: strategy,
+    );
+    await _reload();
+  }
+
   Future<void> markSettled(
     String planId,
     String fromId,
     String toId,
-    int amount,
-  ) async {
+    int amount, {
+    String? expenseId,
+  }) async {
     final service = await ref.read(planServiceProvider.future);
-    await service.markSettled(planId, fromId, toId, amount);
+    await service.markSettled(
+      planId,
+      fromId,
+      toId,
+      amount,
+      expenseId: expenseId,
+    );
     await _reload();
   }
 

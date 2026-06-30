@@ -62,8 +62,14 @@ class PlanRepository {
       'from_id': payment.fromId,
       'to_id': payment.toId,
       'amount': payment.amount,
+      'expense_id': payment.expenseId,
       'created_at': payment.createdAt,
     });
+  }
+
+  Future<void> deleteExpense(String expenseId) async {
+    // expense_share rows cascade via ON DELETE CASCADE.
+    await _db.delete('expense', where: 'id = ?', whereArgs: [expenseId]);
   }
 
   Future<void> addPerson(String planId, Person person) async {
@@ -138,6 +144,7 @@ class PlanRepository {
             fromId: p['from_id'] as String,
             toId: p['to_id'] as String,
             amount: p['amount'] as int,
+            expenseId: p['expense_id'] as String?,
             createdAt: p['created_at'] as int,
           ),
         )

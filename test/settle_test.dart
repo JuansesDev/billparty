@@ -1,5 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:billparty/domain/services/settle.dart';
+import 'package:billparty/domain/models/expense.dart';
+import 'package:billparty/domain/models/payment.dart';
 
 void main() {
   group('simplifyDebts', () {
@@ -30,5 +32,37 @@ void main() {
         expect(net.values.every((v) => v == 0), true);
       },
     );
+  });
+
+  group('expenseDebts', () {
+    test('each participant owes their share minus what they paid for it', () {
+      const e = Expense(
+        id: 'e1',
+        amount: 90,
+        payerId: 'a',
+        shares: {'a': 30, 'b': 30, 'c': 30},
+      );
+      final debts = expenseDebts(e, const [
+        Payment(fromId: 'b', toId: 'a', amount: 30, expenseId: 'e1'),
+      ]);
+      final byId = {for (final d in debts) d.personId: d};
+
+      expect(byId.containsKey('a'), false); // payer excluded
+      expect(byId['b']!.isSettled, true); // paid in full
+      expect(byId['c']!.remaining, 30); // still owes
+    });
+
+    test('ignores payments tagged to a different expense', () {
+      const e = Expense(
+        id: 'e1',
+        amount: 60,
+        payerId: 'a',
+        shares: {'a': 30, 'b': 30},
+      );
+      final debts = expenseDebts(e, const [
+        Payment(fromId: 'b', toId: 'a', amount: 30, expenseId: 'other'),
+      ]);
+      expect(debts.single.remaining, 30);
+    });
   });
 }

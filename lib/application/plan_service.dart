@@ -64,18 +64,21 @@ class PlanService {
     await _repo.addExpense(planId, expense);
   }
 
-  /// Records that [fromId] paid [toId] back, reducing the debt.
+  /// Records that [fromId] paid [toId] back, reducing the debt. When tied to an
+  /// [expenseId], it settles that specific expense's share.
   Future<void> markSettled(
     String planId,
     String fromId,
     String toId,
-    int amount,
-  ) async {
+    int amount, {
+    String? expenseId,
+  }) async {
     final payment = Payment(
       id: _newId(),
       fromId: fromId,
       toId: toId,
       amount: amount,
+      expenseId: expenseId,
       createdAt: _now(),
     );
     await _repo.addPayment(planId, payment);

@@ -12,19 +12,27 @@ void main() {
       Person(id: 'b', name: 'Beto'),
     ];
 
-    test('lists who pays whom to settle up', () {
+    test('itemizes expenses, balances and the settle-up', () {
       final plan = Plan(
         id: 'p',
-        name: 'Dinner',
+        name: 'Trip',
         createdAt: 0,
         people: people,
         expenses: const [
-          Expense(amount: 100, payerId: 'a', shares: {'a': 50, 'b': 50}),
+          Expense(
+            description: 'Hotel',
+            amount: 100,
+            payerId: 'a',
+            shares: {'a': 50, 'b': 50},
+          ),
         ],
       );
       final text = buildShareText(plan);
 
-      expect(text, contains('Dinner'));
+      expect(text, contains('EXPENSES'));
+      expect(text, contains('Hotel'));
+      expect(text, contains('BALANCES'));
+      expect(text, contains('SETTLE UP'));
       expect(text, contains('Beto → Ana'));
       expect(text, contains(r'$50'));
     });

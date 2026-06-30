@@ -49,6 +49,7 @@ Future<void> createBillPartySchema(Database db) async {
       from_id     TEXT NOT NULL REFERENCES person(id),
       to_id       TEXT NOT NULL REFERENCES person(id),
       amount      INTEGER NOT NULL,
+      expense_id  TEXT,
       created_at  INTEGER NOT NULL
     )
   ''');
@@ -71,9 +72,14 @@ class AppDatabase {
     final dbPath = join(await getDatabasesPath(), 'billparty.db');
     return openDatabase(
       dbPath,
-      version: 1,
+      version: 2,
       onConfigure: (db) => db.execute('PRAGMA foreign_keys = ON'),
       onCreate: (db, version) => createBillPartySchema(db),
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('ALTER TABLE payment ADD COLUMN expense_id TEXT');
+        }
+      },
     );
   }
 }

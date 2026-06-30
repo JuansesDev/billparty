@@ -10,9 +10,9 @@
 # build server), and F-Droid replaces that signature — so no keystore is needed
 # here.
 #
-# Note: checkupdates can't auto-detect the version because Flutter keeps it in
-# pubspec.yaml (the gradle uses placeholders), so new versions are added by
-# pushing a new vX.Y.Z tag + bumping the Builds block here.
+# Note: UpdateCheckMode is None because F-Droid can't auto-detect the version
+# (Flutter keeps it in pubspec.yaml; the gradle uses placeholders). New versions
+# are added by pushing a new vX.Y.Z tag and adding a Builds entry here via MR.
 
 Categories:
   - Finance Manager
@@ -42,7 +42,7 @@ Builds:
       - export PATH="$$flutter$$/bin:$PATH"
       - flutter build apk --release
 
-AutoUpdateMode: Version
-UpdateCheckMode: Tags
+AutoUpdateMode: None
+UpdateCheckMode: None
 CurrentVersion: 1.0.1
 CurrentVersionCode: 2

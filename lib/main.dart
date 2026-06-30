@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ui/home_screen.dart';
 import 'ui/theme.dart';
 import 'ui/theme_mode_provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+
   // ProviderScope stores the state of every Riverpod provider for the whole app.
-  runApp(const ProviderScope(child: BillPartyApp()));
+  runApp(
+    ProviderScope(
+      overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],
+      child: const BillPartyApp(),
+    ),
+  );
 }
 
 class BillPartyApp extends ConsumerWidget {

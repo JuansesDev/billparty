@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/providers.dart';
+import 'widgets/pill_button.dart';
 
 class NewPlanDialog extends ConsumerStatefulWidget {
   const NewPlanDialog({super.key});
@@ -106,14 +107,12 @@ class _NewPlanDialogState extends ConsumerState<NewPlanDialog> {
         ),
       ),
       actions: [
-        TextButton(
+        PillButton(
+          label: 'Cancel',
+          variant: PillVariant.ghost,
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
         ),
-        FilledButton(
-          onPressed: _isValid ? _submit : null,
-          child: const Text('Create'),
-        ),
+        PillButton(label: 'Create', onPressed: _isValid ? _submit : null),
       ],
     );
   }

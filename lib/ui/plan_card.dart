@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../application/plan_summary.dart';
 import '../domain/models/plan.dart';
 import 'money.dart';
+import 'widgets/avatar.dart';
+import 'widgets/brand_card.dart';
 
 class PlanCard extends StatelessWidget {
   final Plan plan;
@@ -14,71 +16,95 @@ class PlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final summary = PlanSummary.of(plan);
+    final count = plan.people.length;
 
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(18),
-          child: Row(
+    return BrandCard(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Text(
+                  plan.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.w800,
+                    height: 1.1,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              _StatusPill(summary: summary),
+            ],
+          ),
+          const SizedBox(height: 18),
+          Row(
+            children: [
+              AvatarCluster(names: plan.people.map((p) => p.name).toList()),
+              const Spacer(),
+              Text.rich(
+                TextSpan(
                   children: [
-                    Text(
-                      plan.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w700,
+                    TextSpan(
+                      text: '$count ${count == 1 ? 'person' : 'people'} · ',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${plan.people.length} people · ${formatMoney(summary.total)}',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
+                    TextSpan(
+                      text: formatMoney(summary.total),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
-              _StatusChip(status: summary.status),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-class _StatusChip extends StatelessWidget {
-  final PlanStatus status;
+class _StatusPill extends StatelessWidget {
+  final PlanSummary summary;
 
-  const _StatusChip({required this.status});
+  const _StatusPill({required this.summary});
 
   @override
   Widget build(BuildContext context) {
-    final (label, color) = switch (status) {
-      PlanStatus.settled => ('Settled', const Color(0xFF2E9E6B)),
-      PlanStatus.pending => ('Pending', const Color(0xFFD08700)),
-      PlanStatus.empty => ('Empty', Theme.of(context).colorScheme.outline),
+    final scheme = Theme.of(context).colorScheme;
+
+    final (Color fg, String text, bool strong) = switch (summary.status) {
+      PlanStatus.pending => (
+        scheme.onSurface,
+        '${formatMoney(summary.outstanding)} unsettled',
+        true,
+      ),
+      PlanStatus.settled => (scheme.onSurfaceVariant, 'Settled', false),
+      PlanStatus.empty => (scheme.onSurfaceVariant, 'No expenses', false),
     };
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      constraints: const BoxConstraints(maxWidth: 150),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.14),
+        color: scheme.onSurface.withValues(alpha: strong ? 0.10 : 0.05),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        label,
+        text,
         style: TextStyle(
-          color: color,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
+          color: fg,
+          fontWeight: strong ? FontWeight.w700 : FontWeight.w600,
+          fontSize: 13,
+          height: 1.15,
         ),
       ),
     );

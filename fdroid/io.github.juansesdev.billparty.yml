@@ -10,12 +10,12 @@
 # build server), and F-Droid replaces that signature — so no keystore is needed
 # here.
 #
-# See fdroid/README.md for how to submit. The Builds: block is the part most
-# likely to need small tweaks during review — cross-check it against a recent
-# Flutter app already in fdroiddata.
+# Note: checkupdates can't auto-detect the version because Flutter keeps it in
+# pubspec.yaml (the gradle uses placeholders), so new versions are added by
+# pushing a new vX.Y.Z tag + bumping the Builds block here.
 
 Categories:
-  - Money
+  - Finance Manager
 License: MIT
 AuthorName: JuansesDev
 SourceCode: https://github.com/JuansesDev/billparty
@@ -28,12 +28,12 @@ RepoType: git
 Repo: https://github.com/JuansesDev/billparty
 
 Builds:
-  - versionName: 1.0.0
-    versionCode: 1
-    commit: v1.0.0
+  - versionName: 1.0.1
+    versionCode: 2
+    commit: v1.0.1
+    output: build/app/outputs/flutter-apk/app-release.apk
     srclibs:
       - flutter@3.44.2
-    output: build/app/outputs/flutter-apk/app-release.apk
     prebuild:
       - export PATH="$$flutter$$/bin:$PATH"
       - flutter config --no-analytics --no-cli-animations
@@ -42,7 +42,7 @@ Builds:
       - export PATH="$$flutter$$/bin:$PATH"
       - flutter build apk --release
 
-AutoUpdateMode: Version v%v
+AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.0.0
-CurrentVersionCode: 1
+CurrentVersion: 1.0.1
+CurrentVersionCode: 2

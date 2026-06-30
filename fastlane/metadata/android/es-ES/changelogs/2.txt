@@ -1,0 +1,2 @@
+Ajuste de empaquetado para F-Droid (quita el bloque de metadata de dependencias
+de Google del APK). Sin cambios visibles para el usuario.

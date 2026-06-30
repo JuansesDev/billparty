@@ -1,0 +1,30 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="BillParty app icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#16A892"/>
+      <stop offset="1" stop-color="#0B7D6F"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background tile -->
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- soft highlight for depth -->
+  <circle cx="150" cy="120" r="230" fill="#FFFFFF" opacity="0.06"/>
+
+  <!-- receipt -->
+  <path d="M198 156 H314 Q332 156 332 174 V332
+           L319.3 348 L306.7 332 L294 348 L281.3 332 L268.7 348 L256 332
+           L243.3 348 L230.7 332 L218 348 L205.3 332 L192.7 348 L180 332
+           V174 Q180 156 198 156 Z" fill="#FFFFFF"/>
+
+  <!-- line items -->
+  <rect x="206" y="198" width="100" height="13" rx="6.5" fill="#D2EBE5"/>
+  <rect x="206" y="224" width="100" height="13" rx="6.5" fill="#D2EBE5"/>
+  <rect x="206" y="256" width="56"  height="15" rx="7.5" fill="#1D9E75"/>
+
+  <!-- accent coin: "split" (÷) -->
+  <circle cx="332" cy="350" r="48" fill="#E89A2C" stroke="#F4EFE7" stroke-width="8"/>
+  <circle cx="332" cy="332" r="6.5" fill="#FFFFFF"/>
+  <rect x="315" y="346" width="34" height="8" rx="4" fill="#FFFFFF"/>
+  <circle cx="332" cy="368" r="6.5" fill="#FFFFFF"/>
+</svg>

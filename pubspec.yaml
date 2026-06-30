@@ -39,6 +39,7 @@ dependencies:
   uuid: ^4.5.3
   flutter_riverpod: ^3.3.2
   share_plus: ^13.2.0
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:
@@ -51,9 +52,18 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
   sqflite_common_ffi: ^2.4.2
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/billparty-icon.png"
+  adaptive_icon_background: "#0F8E7C"
+  adaptive_icon_foreground: "assets/icon/billparty-icon.png"
+  remove_alpha_ios: true
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -62,6 +72,14 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/icon/billparty-icon.png
+
+  fonts:
+    - family: PlusJakartaSans
+      fonts:
+        - asset: assets/fonts/PlusJakartaSans.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

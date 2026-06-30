@@ -1,0 +1,8 @@
+First release.
+
+* Plans with people and expenses.
+* Split equally, by exact amounts, or by shares.
+* Balances and per-expense settle-up with partial payments.
+* Edit and delete expenses.
+* Itemized text sharing.
+* Light and dark themes. Fully offline.

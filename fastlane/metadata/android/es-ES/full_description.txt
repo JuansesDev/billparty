@@ -1,0 +1,22 @@
+BillParty divide los gastos compartidos de un grupo — un viaje, una cena, un apartamento — y le dice a cada quien la forma más simple de quedar a mano. Funciona totalmente sin conexión: sin cuenta, sin red, sin rastreo. Tus datos nunca salen de tu dispositivo.
+
+Funciones:
+
+* Crea planes (viaje, cena, apartamento) con las personas involucradas.
+* Agrega gastos y divídelos de tres formas:
+    - En partes iguales entre todos.
+    - Por montos exactos — cada quien paga lo que pidió.
+    - Por partes — alguien cuenta doble, etc.
+* Mira los balances de un vistazo: a quién le deben y quién debe.
+* Salda por gasto — marca la parte de cada persona como pagada, total o parcialmente.
+* Edita o elimina cualquier gasto.
+* Comparte un resumen de texto detallado: gastos, balances y quién le paga a quién.
+* Temas claro y oscuro.
+
+Privacidad por diseño:
+
+* Offline primero — funciona en modo avión.
+* Sin cuentas, sin servidores, sin analítica, sin anuncios.
+* Todos los datos se guardan localmente en una base de datos privada en tu dispositivo.
+
+El dinero se guarda en unidades enteras, así que los balances siempre son exactos — sin errores de coma flotante.

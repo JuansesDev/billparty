@@ -1,0 +1,22 @@
+BillParty splits shared expenses for a group — a trip, a dinner, a flatshare — and tells everyone the simplest way to settle up. It works completely offline: no account, no network, no tracking. Your data never leaves your device.
+
+Features:
+
+* Create plans (trip, dinner, flatshare) with the people involved.
+* Add expenses and split them three ways:
+    - Equally between everyone.
+    - By exact amounts — each person pays for what they ordered.
+    - By shares — someone counts double, etc.
+* See balances at a glance: who is owed and who owes.
+* Settle per expense — mark each person's share as paid, in full or partially.
+* Edit or delete any expense.
+* Share an itemized text summary: expenses, balances and who pays whom.
+* Light and dark themes.
+
+Privacy by design:
+
+* Offline-first — works in airplane mode.
+* No accounts, no servers, no analytics, no ads.
+* All data is stored locally in a private database on your device.
+
+Money is stored as whole units, so balances are always exact — no floating-point drift.

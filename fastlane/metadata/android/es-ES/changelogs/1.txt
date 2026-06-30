@@ -1,0 +1,8 @@
+Primera versión.
+
+* Planes con personas y gastos.
+* División en partes iguales, por montos exactos o por partes.
+* Balances y saldo por gasto con pagos parciales.
+* Editar y eliminar gastos.
+* Compartir resumen de texto detallado.
+* Temas claro y oscuro. Totalmente sin conexión.

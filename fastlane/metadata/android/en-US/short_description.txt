@@ -1,0 +1,1 @@
+Split group expenses offline. No accounts, no network, no tracking.
